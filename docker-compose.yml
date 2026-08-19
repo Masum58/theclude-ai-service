@@ -1,0 +1,40 @@
+# WHAT: Local infrastructure for the AI microservice
+# WHY: PostgreSQL persists video-processing job state; Redis is ready for the later worker queue.
+# INPUT: docker compose up -d
+# OUTPUT: PostgreSQL on localhost:5433 and Redis on localhost:6379
+# WHO CALLS: ai_service during local development
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: theclude-ai-postgres
+    environment:
+      POSTGRES_DB: ai_service
+      POSTGRES_USER: ai_service
+      POSTGRES_PASSWORD: ai_service
+    ports:
+      - "5433:5432"
+    volumes:
+      - ai_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ai_service -d ai_service"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: theclude-ai-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ai_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  ai_postgres_data:
+  ai_redis_data:

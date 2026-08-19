@@ -1,0 +1,115 @@
+{
+  "description": "Golden dataset for RAG evaluation — TheClude AI Service. Each entry has a question, the video it's about, the expected timestamp range the answer should come from (for retrieval evaluation), and key facts the answer should contain (for generation/faithfulness evaluation).",
+  "entries": [
+    {
+      "id": "cap_01",
+      "video_id": "api_test_001",
+      "question": "What is capitulation in crypto trading?",
+      "expected_chunk_range": "[00:00:00 - 00:01:03]",
+      "expected_key_facts": [
+        "originally a military term meaning surrender",
+        "long-term holders or buyers give up and cut losses",
+        "related to panic selling"
+      ]
+    },
+    {
+      "id": "cap_02",
+      "video_id": "api_test_001",
+      "question": "Why does capitulation happen according to the video?",
+      "expected_chunk_range": "[00:01:03 - 00:02:01]",
+      "expected_key_facts": [
+        "driven by market psychology and emotional cycle",
+        "investors feel they cannot afford to lose more money",
+        "happens after complacency, anxiety, denial, panic"
+      ]
+    },
+    {
+      "id": "cap_03",
+      "video_id": "api_test_001",
+      "question": "Which companies are mentioned as examples of forced liquidation?",
+      "expected_chunk_range": "[00:02:01 - 00:03:02]",
+      "expected_key_facts": [
+        "Celsius",
+        "Three Arrows Capital",
+        "over-leveraged, forced to sell assets"
+      ]
+    },
+    {
+      "id": "cap_04",
+      "video_id": "api_test_001",
+      "question": "What did capitulation look like on the price chart?",
+      "expected_chunk_range": "[00:03:02 - 00:04:03]",
+      "expected_key_facts": [
+        "severe, sharp price drops",
+        "long ugly red candles",
+        "losing a large percentage of value in a short time (e.g. ~55% in two weeks)"
+      ]
+    },
+    {
+      "id": "cap_05",
+      "video_id": "api_test_001",
+      "question": "Is capitulation a good time to sell or buy?",
+      "expected_chunk_range": "[00:03:02 - 00:05:08]",
+      "expected_key_facts": [
+        "worst time to sell",
+        "market is usually oversold",
+        "often followed by consolidation or a strong bounce",
+        "historically a better time to buy"
+      ]
+    },
+    {
+      "id": "cap_06",
+      "video_id": "api_test_001",
+      "question": "What happened during the COVID crash in terms of market recovery?",
+      "expected_chunk_range": "[00:04:03 - 00:05:08]",
+      "expected_key_facts": [
+        "market lost around 33.5% of its value in one week",
+        "V-shaped recovery followed"
+      ]
+    },
+    {
+      "id": "cap_07",
+      "video_id": "api_test_001",
+      "question": "What is miner capitulation?",
+      "expected_chunk_range": "[00:05:08 - 00:06:13]",
+      "expected_key_facts": [
+        "happens when mining cost exceeds block reward value",
+        "miners become forced sellers",
+        "spike in miner-to-exchange inflows",
+        "signals the market is near a bottom"
+      ]
+    },
+    {
+      "id": "cap_08",
+      "video_id": "api_test_001",
+      "question": "Did capitulation-like patterns happen in the stock market too?",
+      "expected_chunk_range": "[00:06:13 - 00:07:11]",
+      "expected_key_facts": [
+        "S&P 500 example during COVID",
+        "two sharp red candles, around 10% and 14%",
+        "strong buyback followed"
+      ]
+    },
+    {
+      "id": "cap_09",
+      "video_id": "api_test_001",
+      "question": "According to the video, what should you do when you see capitulation candles?",
+      "expected_chunk_range": "[00:03:02 - 00:04:03]",
+      "expected_key_facts": [
+        "not a time to be a forced seller",
+        "generally a better time to start buying"
+      ]
+    },
+    {
+      "id": "cap_10",
+      "video_id": "api_test_001",
+      "question": "What is the psychological market cycle mentioned in the video, from top to bottom?",
+      "expected_chunk_range": "[00:01:03 - 00:02:01]",
+      "expected_key_facts": [
+        "belief, thrill, euphoria at the top",
+        "then complacency, anxiety, denial, panic",
+        "ending in capitulation"
+      ]
+    }
+  ]
+}
