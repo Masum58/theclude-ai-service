@@ -1,0 +1,77 @@
+{
+  "hit_rate": 0.0,
+  "hits": 0,
+  "total": 10,
+  "results": [
+    {
+      "id": "cap_01",
+      "question": "What is capitulation in crypto trading?",
+      "expected_chunk_range": "[00:00:00 - 00:01:03]",
+      "hit": false,
+      "retrieved_ranges": []
+    },
+    {
+      "id": "cap_02",
+      "question": "Why does capitulation happen according to the video?",
+      "expected_chunk_range": "[00:01:03 - 00:02:01]",
+      "hit": false,
+      "retrieved_ranges": []
+    },
+    {
+      "id": "cap_03",
+      "question": "Which companies are mentioned as examples of forced liquidation?",
+      "expected_chunk_range": "[00:02:01 - 00:03:02]",
+      "hit": false,
+      "retrieved_ranges": []
+    },
+    {
+      "id": "cap_04",
+      "question": "What did capitulation look like on the price chart?",
+      "expected_chunk_range": "[00:03:02 - 00:04:03]",
+      "hit": false,
+      "retrieved_ranges": []
+    },
+    {
+      "id": "cap_05",
+      "question": "Is capitulation a good time to sell or buy?",
+      "expected_chunk_range": "[00:03:02 - 00:05:08]",
+      "hit": false,
+      "retrieved_ranges": []
+    },
+    {
+      "id": "cap_06",
+      "question": "What happened during the COVID crash in terms of market recovery?",
+      "expected_chunk_range": "[00:04:03 - 00:05:08]",
+      "hit": false,
+      "retrieved_ranges": []
+    },
+    {
+      "id": "cap_07",
+      "question": "What is miner capitulation?",
+      "expected_chunk_range": "[00:05:08 - 00:06:13]",
+      "hit": false,
+      "retrieved_ranges": []
+    },
+    {
+      "id": "cap_08",
+      "question": "Did capitulation-like patterns happen in the stock market too?",
+      "expected_chunk_range": "[00:06:13 - 00:07:11]",
+      "hit": false,
+      "retrieved_ranges": []
+    },
+    {
+      "id": "cap_09",
+      "question": "According to the video, what should you do when you see capitulation candles?",
+      "expected_chunk_range": "[00:03:02 - 00:04:03]",
+      "hit": false,
+      "retrieved_ranges": []
+    },
+    {
+      "id": "cap_10",
+      "question": "What is the psychological market cycle mentioned in the video, from top to bottom?",
+      "expected_chunk_range": "[00:01:03 - 00:02:01]",
+      "hit": false,
+      "retrieved_ranges": []
+    }
+  ]
+}

@@ -20,7 +20,13 @@ class Settings(BaseSettings):
     
     # AI & API Keys
     GEMINI_API_KEY: str = ""
-    CHROMA_DB_DIR: str = "chroma_db"
+
+    # ChromaDB — standalone server (Docker container), not a local file path anymore.
+    # api and worker both connect to this same server over the network, so they
+    # always see the same live data instead of each keeping their own stale
+    # in-memory snapshot of a shared file.
+    CHROMA_HOST: str = "localhost"
+    CHROMA_PORT: int = 8000
 
     # Persistent job tracking
     DATABASE_URL: str = "postgresql://ai_service:ai_service@localhost:5433/ai_service"

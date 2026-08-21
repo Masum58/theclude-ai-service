@@ -1,0 +1,137 @@
+{
+  "hit_rate": 1.0,
+  "hits": 10,
+  "total": 10,
+  "results": [
+    {
+      "id": "btc_01",
+      "question": "What four fields are contained in a Bitcoin block header?",
+      "expected_chunk_range": "[00:00:47 - 00:01:35]",
+      "hit": true,
+      "retrieved_ranges": [
+        "[00:00:47 - 00:01:35]",
+        "[00:01:35 - 00:02:28]",
+        "[00:02:28 - 00:03:12]",
+        "[00:03:12 - 00:04:00]",
+        "[00:04:00 - 00:04:52]"
+      ]
+    },
+    {
+      "id": "btc_02",
+      "question": "Why is Bitcoin referred to as a 'chain' of blocks?",
+      "expected_chunk_range": "[00:01:35 - 00:02:28]",
+      "hit": true,
+      "retrieved_ranges": [
+        "[00:00:47 - 00:01:35]",
+        "[00:01:35 - 00:02:28]",
+        "[00:00:00 - 00:00:47]",
+        "[00:02:28 - 00:03:12]",
+        "[00:04:52 - 00:05:44]"
+      ]
+    },
+    {
+      "id": "btc_03",
+      "question": "What is a hash function and what size output does it produce in Bitcoin?",
+      "expected_chunk_range": "[00:02:28 - 00:03:12]",
+      "hit": true,
+      "retrieved_ranges": [
+        "[00:03:12 - 00:04:00]",
+        "[00:02:28 - 00:03:12]",
+        "[00:04:00 - 00:04:52]",
+        "[00:01:35 - 00:02:28]",
+        "[00:00:47 - 00:01:35]"
+      ]
+    },
+    {
+      "id": "btc_04",
+      "question": "What is collision resistance in hash functions and why is it important?",
+      "expected_chunk_range": "[00:03:12 - 00:04:00]",
+      "hit": true,
+      "retrieved_ranges": [
+        "[00:03:12 - 00:04:00]",
+        "[00:04:00 - 00:04:52]",
+        "[00:02:28 - 00:03:12]",
+        "[00:01:35 - 00:02:28]",
+        "[00:08:04 - 00:08:40]"
+      ]
+    },
+    {
+      "id": "btc_05",
+      "question": "How often is a new block added to the Bitcoin blockchain?",
+      "expected_chunk_range": "[00:04:52 - 00:05:44]",
+      "hit": true,
+      "retrieved_ranges": [
+        "[00:04:52 - 00:05:44]",
+        "[00:04:00 - 00:04:52]",
+        "[00:00:47 - 00:01:35]",
+        "[00:05:44 - 00:06:29]",
+        "[00:00:00 - 00:00:47]"
+      ]
+    },
+    {
+      "id": "btc_06",
+      "question": "How many transactions are typically included in each Bitcoin block?",
+      "expected_chunk_range": "[00:04:52 - 00:05:44]",
+      "hit": true,
+      "retrieved_ranges": [
+        "[00:04:52 - 00:05:44]",
+        "[00:00:00 - 00:00:47]",
+        "[00:00:47 - 00:01:35]",
+        "[00:05:44 - 00:06:29]",
+        "[00:07:20 - 00:08:04]"
+      ]
+    },
+    {
+      "id": "btc_07",
+      "question": "What is a transaction fee in Bitcoin and how is it calculated?",
+      "expected_chunk_range": "[00:06:29 - 00:07:20]",
+      "hit": true,
+      "retrieved_ranges": [
+        "[00:06:29 - 00:07:20]",
+        "[00:07:20 - 00:08:04]",
+        "[00:04:52 - 00:05:44]",
+        "[00:05:44 - 00:06:29]",
+        "[00:00:47 - 00:01:35]"
+      ]
+    },
+    {
+      "id": "btc_08",
+      "question": "How do Bitcoin miners get compensated for their work?",
+      "expected_chunk_range": "[00:07:20 - 00:08:04]",
+      "hit": true,
+      "retrieved_ranges": [
+        "[00:07:20 - 00:08:04]",
+        "[00:06:29 - 00:07:20]",
+        "[00:04:52 - 00:05:44]",
+        "[00:05:44 - 00:06:29]",
+        "[00:00:00 - 00:00:47]"
+      ]
+    },
+    {
+      "id": "btc_09",
+      "question": "What are the different roles of miners, end-users, and service providers in the Bitcoin network?",
+      "expected_chunk_range": "[00:08:04 - 00:08:40]",
+      "hit": true,
+      "retrieved_ranges": [
+        "[00:08:04 - 00:08:40]",
+        "[00:07:20 - 00:08:04]",
+        "[00:06:29 - 00:07:20]",
+        "[00:00:00 - 00:00:47]",
+        "[00:04:52 - 00:05:44]"
+      ]
+    },
+    {
+      "id": "btc_10",
+      "question": "Which website was suggested in the video to explore Bitcoin blockchain statistics?",
+      "expected_chunk_range": "[00:05:44 - 00:06:29]",
+      "hit": true,
+      "retrieved_ranges": [
+        "[00:05:44 - 00:06:29]",
+        "[00:04:52 - 00:05:44]",
+        "[00:04:00 - 00:04:52]",
+        "[00:08:04 - 00:08:40]",
+        "[00:00:00 - 00:00:47]"
+      ]
+    }
+  ]
+}

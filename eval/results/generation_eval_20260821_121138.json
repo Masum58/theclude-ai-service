@@ -1,0 +1,187 @@
+{
+  "average_score": 0.6599999999999999,
+  "total_questions": 10,
+  "results": [
+    {
+      "id": "btc_01",
+      "question": "What four fields are contained in a Bitcoin block header?",
+      "video_id": "bitcoin_lesson_01",
+      "answer": "Based on the video transcript, a Bitcoin block header is quite short and literally contains the following four fields:\n\n1. **A hash** (a transaction hash representing the transactions, which is a small value of 32 bytes of data)\n2. **A timestamp**\n3. **The transactions**\n4. **A nonce**\n\nThis information is discussed in the timestamp range **[00:00:47 - 00:01:35]**.",
+      "expected_key_facts": [
+        "hash (or transaction hash)",
+        "timestamp",
+        "transactions",
+        "nonce",
+        "header contains 4 fields and is quite short"
+      ],
+      "covered_facts": [
+        "hash (or transaction hash)",
+        "timestamp",
+        "transactions",
+        "nonce",
+        "header contains 4 fields and is quite short"
+      ],
+      "missing_facts": [],
+      "score": 1.0
+    },
+    {
+      "id": "btc_02",
+      "question": "Why is Bitcoin referred to as a 'chain' of blocks?",
+      "video_id": "bitcoin_lesson_01",
+      "answer": "Bitcoin is referred to as a \"chain\" of blocks because the block headers are linked together through a recursive cryptographic process:\n\n* **Chaining through hashes:** The header of each block contains a hash that represents the data inside it `[00:00:47 - 00:01:35]`. To link them, the data from a previous block (block $N-1$) is compressed using a hash function into a short 32-byte string, and this hash is written directly into the next block (block $N$) `[00:01:35 - 00:02:28]`.\n* **Recursive dependency:** Because block $N$ contains a hash of block $N-1$, and block $N-1$ contains a hash of block $N-2$, every block recursively depends on all the blocks that came before it `[00:01:35 - 00:02:28]`. \n\nThis hashing mechanism links the blocks in a strict, chronological progression where any change to a past block would disrupt the entire chain of subsequent blocks `[00:01:35 - 00:02:28]`.",
+      "expected_key_facts": [
+        "block headers are chained together",
+        "hash of previous block is written into next block",
+        "recursive dependency on all previous blocks",
+        "defines a strict ordering of blocks and transactions"
+      ],
+      "covered_facts": [
+        "block headers are chained together",
+        "hash of previous block is written into next block",
+        "recursive dependency on all previous blocks",
+        "defines a strict ordering of blocks and transactions"
+      ],
+      "missing_facts": [],
+      "score": 1.0
+    },
+    {
+      "id": "btc_03",
+      "question": "What is a hash function and what size output does it produce in Bitcoin?",
+      "video_id": "bitcoin_lesson_01",
+      "answer": "Based on the video transcript, here is the explanation of a hash function and its output size:\n\n* **What a hash function is:** A hash function (denoted as $H$) is an efficiently computable function that takes arbitrary data of any size (even gigabytes of data) as input and maps it to a fixed-size output [00:02:28 - 00:03:12]. A key property of these functions is **collision resistance**, meaning it is highly difficult to find two different inputs that map to the exact same output [00:03:12 - 00:04:00].\n* **Output size:** In the context of Bitcoin, the hash function produces a **32-byte** output (which is written into specific fields like block headers) [00:02:28 - 00:03:12], [00:03:12 - 00:04:00]. *(Note: Though \"32-bit string\" is briefly mentioned at [00:01:35 - 00:02:28], the detailed explanation specifies the output is **32 bytes**).*",
+      "expected_key_facts": [
+        "computable function denoted by H",
+        "takes arbitrary data as input (can be gigabytes)",
+        "produces a 32-byte output"
+      ],
+      "covered_facts": [
+        "computable function denoted by H",
+        "takes arbitrary data as input (can be gigabytes)",
+        "produces a 32-byte output"
+      ],
+      "missing_facts": [],
+      "score": 1.0
+    },
+    {
+      "id": "btc_04",
+      "question": "What is collision resistance in hash functions and why is it important?",
+      "video_id": "bitcoin_lesson_01",
+      "answer": "Based on the video transcript, **collision resistance** is a key property of a hash function where it is highly difficult to find two distinct, different inputs (referred to as $D_1$ and $D_2$) that happen to map to the exact same 32-byte output hash value `[00:03:12 - 00:04:00]`. \n\nIf two different inputs do produce the same output, this is called a \"collision\" `[00:04:00 - 00:04:52]`. \n\n**Why it is important:**\nCollision resistance is necessary because many of the operations and security mechanisms that hash functions are used for rely on the fact that every unique piece of data has its own unique hash identifier. Without collision resistance, it would be difficult to reliably verify data integrity or trust the connections between blocks in a blockchain `[00:04:00 - 00:04:52]`.",
+      "expected_key_facts": [
+        "difficult to find two distinct inputs (D1 and D2) that map to the same output H(D1) = H(D2)",
+        "necessary property for blockchain security and data integrity"
+      ],
+      "covered_facts": [
+        "difficult to find two distinct inputs (D1 and D2) that map to the same output H(D1) = H(D2)",
+        "necessary property for blockchain security and data integrity"
+      ],
+      "missing_facts": [],
+      "score": 1.0
+    },
+    {
+      "id": "btc_05",
+      "question": "How often is a new block added to the Bitcoin blockchain?",
+      "video_id": "bitcoin_lesson_01",
+      "answer": "No answer generated",
+      "expected_key_facts": [
+        "roughly every 10 minutes",
+        "added continuously since 2009"
+      ],
+      "covered_facts": [],
+      "missing_facts": [
+        "roughly every 10 minutes",
+        "added continuously since 2009"
+      ],
+      "score": 0.0
+    },
+    {
+      "id": "btc_06",
+      "question": "How many transactions are typically included in each Bitcoin block?",
+      "video_id": "bitcoin_lesson_01",
+      "answer": "No answer generated",
+      "expected_key_facts": [
+        "about 1,000 transactions per block",
+        "transactions transfer Bitcoin from one address to another",
+        "can represent millions of dollars in value per block"
+      ],
+      "covered_facts": [],
+      "missing_facts": [
+        "about 1,000 transactions per block",
+        "transactions transfer Bitcoin from one address to another",
+        "can represent millions of dollars in value per block"
+      ],
+      "score": 0.0
+    },
+    {
+      "id": "btc_07",
+      "question": "What is a transaction fee in Bitcoin and how is it calculated?",
+      "video_id": "bitcoin_lesson_01",
+      "answer": "Based on the video, a **transaction fee** in Bitcoin is the compensation paid to the miner who successfully adds a transaction into a block on the blockchain `[00:06:29 - 00:07:20]`, `[00:07:20 - 00:08:04]`. \n\n### How it is Calculated:\nThe transaction fee is calculated as the **difference between the total input funds and the total output funds** of a transaction `[00:06:29 - 00:07:20]`:\n\n$$\\text{Transaction Fee} = \\text{Total Input Funds} - \\text{Total Output Funds}$$\n\n* **Input addresses** contribute funds to the transaction.\n* **Output addresses** receive the designated funds. \n* Whatever remaining difference is left over after sending the funds to the output addresses is automatically collected by the miner as their fee `[00:06:29 - 00:07:20]`.",
+      "expected_key_facts": [
+        "difference between total input amount and total output amount",
+        "kept by the miner who adds the transaction into a block"
+      ],
+      "covered_facts": [
+        "difference between total input amount and total output amount",
+        "kept by the miner who adds the transaction into a block"
+      ],
+      "missing_facts": [],
+      "score": 1.0
+    },
+    {
+      "id": "btc_08",
+      "question": "How do Bitcoin miners get compensated for their work?",
+      "video_id": "bitcoin_lesson_01",
+      "answer": "Based on the video transcript, Bitcoin miners are compensated in the following ways:\n\n* **Transaction Fees:** \n  * The transaction fee is calculated as the difference between the total input funds and the total output funds in a transaction `[00:06:29 - 00:07:20]`.\n  * The miner who takes these transactions, embeds them into a block, and successfully publishes that block to the blockchain gets to keep these fees `[00:06:29 - 00:07:20]`, `[00:07:20 - 00:08:04]`.\n  * A miner collects a fee for every individual transaction included in their block. For instance, if there are 1,000 transactions in a block, the miner collects all 1,000 transaction fees `[00:07:20 - 00:08:04]`.\n\n* **Other Rewards:**\n  * The video also briefly mentions that miners receive \"some other fees\" (rewards) for their efforts, which are discussed later in the lecture `[00:07:20 - 00:08:04]`.",
+      "expected_key_facts": [
+        "collect transaction fees from transactions in the block (e.g. ~1,000 fees)",
+        "compensated for embedding transactions into blocks and publishing them"
+      ],
+      "covered_facts": [
+        "collect transaction fees from transactions in the block (e.g. ~1,000 fees)",
+        "compensated for embedding transactions into blocks and publishing them"
+      ],
+      "missing_facts": [],
+      "score": 1.0
+    },
+    {
+      "id": "btc_09",
+      "question": "What are the different roles of miners, end-users, and service providers in the Bitcoin network?",
+      "video_id": "bitcoin_lesson_01",
+      "answer": "Based on the video, the different roles in the Bitcoin network are defined as follows:\n\n*   **Miners**: Their primary role is to write to the blockchain. They take transactions from users, group them into blocks, and publish these blocks to the blockchain [00:07:20 - 00:08:04]. In return for this effort, they are compensated with transaction fees (which represent the difference between the total input and total output of a transaction) [00:06:29 - 00:07:20].\n*   **End-Users**: They monitor their own individual state in the blockchain [00:08:04 - 00:08:40].\n*   **Service Providers**: They process data on the blockchain to analyze and understand what is happening in the overall system [00:08:04 - 00:08:40].",
+      "expected_key_facts": [
+        "miners write blocks to the blockchain",
+        "end-users monitor their own state",
+        "service providers process data to understand system state",
+        "everyone validates transactions and agrees on identical blockchain data",
+        "invalid blocks are immediately dropped"
+      ],
+      "covered_facts": [
+        "miners write blocks to the blockchain",
+        "end-users monitor their own state",
+        "service providers process data to understand system state"
+      ],
+      "missing_facts": [
+        "everyone validates transactions and agrees on identical blockchain data",
+        "invalid blocks are immediately dropped"
+      ],
+      "score": 0.6
+    },
+    {
+      "id": "btc_10",
+      "question": "Which website was suggested in the video to explore Bitcoin blockchain statistics?",
+      "video_id": "bitcoin_lesson_01",
+      "answer": "No answer generated",
+      "expected_key_facts": [
+        "blockchain.com",
+        "shows statistics about money transferred, blocks created, and network activity"
+      ],
+      "covered_facts": [],
+      "missing_facts": [
+        "blockchain.com",
+        "shows statistics about money transferred, blocks created, and network activity"
+      ],
+      "score": 0.0
+    }
+  ]
+}

@@ -4,7 +4,7 @@
 # INPUT: video_id, chunks, embeddings, questions, session_id, chat messages
 # OUTPUT: stored confirmations, list of relevant text chunks, chat history strings
 # WHO CALLS: app/graphs/video_processing_graph.py (store), app/graphs/qa_graph.py (query + history)
-# CONNECTED TO: ChromaDB (local persistent storage in chroma_db/ folder), app/core/config.py, app/nodes/embedder.py
+# CONNECTED TO: ChromaDB (standalone server, Docker container on port 8000), app/core/config.py, app/nodes/embedder.py
 
 import uuid
 from typing import List, Dict, Any, Optional
@@ -17,9 +17,17 @@ from app.nodes.embedder import generate_embeddings
 # CHROMADB CLIENT & COLLECTIONS (initialized once at module level)
 # ─────────────────────────────────────────────
 
-# Create a persistent ChromaDB client — data is saved to disk and survives server restarts
-# The chroma_db/ folder is defined in our .env via CHROMA_DB_DIR setting
-chroma_client = chromadb.PersistentClient(path=settings.CHROMA_DB_DIR)
+# Connect to the standalone ChromaDB server (running as a Docker container) instead of
+# each process (api, worker) opening its own local file-based PersistentClient. With
+# PersistentClient, the api process and the worker process each kept their own
+# in-memory snapshot of the same on-disk data — when the worker wrote new chunks while
+# the api process's snapshot was already loaded, queries against that stale snapshot
+# would fail with "Error finding id". A single shared server is the one source of
+# truth for all processes, exactly like Postgres and Redis already are here.
+chroma_client = chromadb.HttpClient(
+    host=settings.CHROMA_HOST,
+    port=settings.CHROMA_PORT,
+)
 
 # Collection 1: Stores video transcript chunks + their embeddings (one entry per chunk)
 video_chunks_collection = chroma_client.get_or_create_collection(
@@ -266,7 +274,7 @@ def get_chat_history(
 
     # Return only the last N messages to keep the context window manageable
     return "\n".join(formatted_messages[-last_n:])
-    
+
 
 def video_has_data(video_id: str) -> bool:
     """
@@ -275,12 +283,10 @@ def video_has_data(video_id: str) -> bool:
         without needing a query embedding — just a metadata lookup.
 
     Why it exists:
-        job_tracker is in-memory only, so its records are lost whenever the server
-        restarts. But the actual chunk data in ChromaDB survives restarts (it's written
-        to disk). This function lets the Q&A route fall back to checking ChromaDB
+        job_tracker records can be lost (e.g. after a restart, before this fell back to
+        PostgreSQL). This function lets the Q&A route fall back to checking ChromaDB
         directly when job_tracker has no record for a video_id — so a previously
-        processed video doesn't incorrectly appear as "never uploaded" just because
-        the server happened to restart since then.
+        processed video doesn't incorrectly appear as "never uploaded".
 
     Output:
         True if at least one chunk exists for this video_id, False otherwise.

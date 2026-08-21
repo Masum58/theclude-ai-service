@@ -2,113 +2,113 @@
   "description": "Golden dataset for RAG evaluation — TheClude AI Service. Each entry has a question, the video it's about, the expected timestamp range the answer should come from (for retrieval evaluation), and key facts the answer should contain (for generation/faithfulness evaluation).",
   "entries": [
     {
-      "id": "cap_01",
-      "video_id": "api_test_001",
-      "question": "What is capitulation in crypto trading?",
-      "expected_chunk_range": "[00:00:00 - 00:01:03]",
+      "id": "btc_01",
+      "video_id": "bitcoin_lesson_01",
+      "question": "What four fields are contained in a Bitcoin block header?",
+      "expected_chunk_range": "[00:00:47 - 00:01:35]",
       "expected_key_facts": [
-        "originally a military term meaning surrender",
-        "long-term holders or buyers give up and cut losses",
-        "related to panic selling"
+        "hash (or transaction hash)",
+        "timestamp",
+        "transactions",
+        "nonce",
+        "header contains 4 fields and is quite short"
       ]
     },
     {
-      "id": "cap_02",
-      "video_id": "api_test_001",
-      "question": "Why does capitulation happen according to the video?",
-      "expected_chunk_range": "[00:01:03 - 00:02:01]",
+      "id": "btc_02",
+      "video_id": "bitcoin_lesson_01",
+      "question": "Why is Bitcoin referred to as a 'chain' of blocks?",
+      "expected_chunk_range": "[00:01:35 - 00:02:28]",
       "expected_key_facts": [
-        "driven by market psychology and emotional cycle",
-        "investors feel they cannot afford to lose more money",
-        "happens after complacency, anxiety, denial, panic"
+        "block headers are chained together",
+        "hash of previous block is written into next block",
+        "recursive dependency on all previous blocks",
+        "defines a strict ordering of blocks and transactions"
       ]
     },
     {
-      "id": "cap_03",
-      "video_id": "api_test_001",
-      "question": "Which companies are mentioned as examples of forced liquidation?",
-      "expected_chunk_range": "[00:02:01 - 00:03:02]",
+      "id": "btc_03",
+      "video_id": "bitcoin_lesson_01",
+      "question": "What is a hash function and what size output does it produce in Bitcoin?",
+      "expected_chunk_range": "[00:02:28 - 00:03:12]",
       "expected_key_facts": [
-        "Celsius",
-        "Three Arrows Capital",
-        "over-leveraged, forced to sell assets"
+        "computable function denoted by H",
+        "takes arbitrary data as input (can be gigabytes)",
+        "produces a 32-byte output"
       ]
     },
     {
-      "id": "cap_04",
-      "video_id": "api_test_001",
-      "question": "What did capitulation look like on the price chart?",
-      "expected_chunk_range": "[00:03:02 - 00:04:03]",
+      "id": "btc_04",
+      "video_id": "bitcoin_lesson_01",
+      "question": "What is collision resistance in hash functions and why is it important?",
+      "expected_chunk_range": "[00:03:12 - 00:04:00]",
       "expected_key_facts": [
-        "severe, sharp price drops",
-        "long ugly red candles",
-        "losing a large percentage of value in a short time (e.g. ~55% in two weeks)"
+        "difficult to find two distinct inputs (D1 and D2) that map to the same output H(D1) = H(D2)",
+        "necessary property for blockchain security and data integrity"
       ]
     },
     {
-      "id": "cap_05",
-      "video_id": "api_test_001",
-      "question": "Is capitulation a good time to sell or buy?",
-      "expected_chunk_range": "[00:03:02 - 00:05:08]",
+      "id": "btc_05",
+      "video_id": "bitcoin_lesson_01",
+      "question": "How often is a new block added to the Bitcoin blockchain?",
+      "expected_chunk_range": "[00:04:52 - 00:05:44]",
       "expected_key_facts": [
-        "worst time to sell",
-        "market is usually oversold",
-        "often followed by consolidation or a strong bounce",
-        "historically a better time to buy"
+        "roughly every 10 minutes",
+        "added continuously since 2009"
       ]
     },
     {
-      "id": "cap_06",
-      "video_id": "api_test_001",
-      "question": "What happened during the COVID crash in terms of market recovery?",
-      "expected_chunk_range": "[00:04:03 - 00:05:08]",
+      "id": "btc_06",
+      "video_id": "bitcoin_lesson_01",
+      "question": "How many transactions are typically included in each Bitcoin block?",
+      "expected_chunk_range": "[00:04:52 - 00:05:44]",
       "expected_key_facts": [
-        "market lost around 33.5% of its value in one week",
-        "V-shaped recovery followed"
+        "about 1,000 transactions per block",
+        "transactions transfer Bitcoin from one address to another",
+        "can represent millions of dollars in value per block"
       ]
     },
     {
-      "id": "cap_07",
-      "video_id": "api_test_001",
-      "question": "What is miner capitulation?",
-      "expected_chunk_range": "[00:05:08 - 00:06:13]",
+      "id": "btc_07",
+      "video_id": "bitcoin_lesson_01",
+      "question": "What is a transaction fee in Bitcoin and how is it calculated?",
+      "expected_chunk_range": "[00:06:29 - 00:07:20]",
       "expected_key_facts": [
-        "happens when mining cost exceeds block reward value",
-        "miners become forced sellers",
-        "spike in miner-to-exchange inflows",
-        "signals the market is near a bottom"
+        "difference between total input amount and total output amount",
+        "kept by the miner who adds the transaction into a block"
       ]
     },
     {
-      "id": "cap_08",
-      "video_id": "api_test_001",
-      "question": "Did capitulation-like patterns happen in the stock market too?",
-      "expected_chunk_range": "[00:06:13 - 00:07:11]",
+      "id": "btc_08",
+      "video_id": "bitcoin_lesson_01",
+      "question": "How do Bitcoin miners get compensated for their work?",
+      "expected_chunk_range": "[00:07:20 - 00:08:04]",
       "expected_key_facts": [
-        "S&P 500 example during COVID",
-        "two sharp red candles, around 10% and 14%",
-        "strong buyback followed"
+        "collect transaction fees from transactions in the block (e.g. ~1,000 fees)",
+        "compensated for embedding transactions into blocks and publishing them"
       ]
     },
     {
-      "id": "cap_09",
-      "video_id": "api_test_001",
-      "question": "According to the video, what should you do when you see capitulation candles?",
-      "expected_chunk_range": "[00:03:02 - 00:04:03]",
+      "id": "btc_09",
+      "video_id": "bitcoin_lesson_01",
+      "question": "What are the different roles of miners, end-users, and service providers in the Bitcoin network?",
+      "expected_chunk_range": "[00:08:04 - 00:08:40]",
       "expected_key_facts": [
-        "not a time to be a forced seller",
-        "generally a better time to start buying"
+        "miners write blocks to the blockchain",
+        "end-users monitor their own state",
+        "service providers process data to understand system state",
+        "everyone validates transactions and agrees on identical blockchain data",
+        "invalid blocks are immediately dropped"
       ]
     },
     {
-      "id": "cap_10",
-      "video_id": "api_test_001",
-      "question": "What is the psychological market cycle mentioned in the video, from top to bottom?",
-      "expected_chunk_range": "[00:01:03 - 00:02:01]",
+      "id": "btc_10",
+      "video_id": "bitcoin_lesson_01",
+      "question": "Which website was suggested in the video to explore Bitcoin blockchain statistics?",
+      "expected_chunk_range": "[00:05:44 - 00:06:29]",
       "expected_key_facts": [
-        "belief, thrill, euphoria at the top",
-        "then complacency, anxiety, denial, panic",
-        "ending in capitulation"
+        "blockchain.com",
+        "shows statistics about money transferred, blocks created, and network activity"
       ]
     }
   ]
