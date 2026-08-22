@@ -160,6 +160,38 @@ python -m app.worker
 ### 6. Try it out
 Visit `http://127.0.0.1:8001/docs` for the interactive API explorer.
 
+### 7. Testing with Postman
+
+Once the server is running, you can test the APIs using Postman:
+
+1. **Health Check:**
+   - **Method:** `GET`
+   - **URL:** `http://127.0.0.1:8001/health`
+   - **Expected:** `{"status": "healthy", ...}`
+
+2. **Process a Video:**
+   - **Method:** `POST`
+   - **URL:** `http://127.0.0.1:8001/api/v1/video/upload`
+   - **Body (raw JSON):** `{"video_id": "test_001", "video_url": "https://www.w3schools.com/html/mov_bbb.mp4"}`
+   - **Expected:** `202 Accepted` (Background task queued).
+
+3. **Check Status:**
+   - **Method:** `GET`
+   - **URL:** `http://127.0.0.1:8001/api/v1/video/status/test_001`
+   - **Expected:** Status `processing` or `completed`. Wait for `completed` before asking questions.
+
+4. **Ask a Question:**
+   - **Method:** `POST`
+   - **URL:** `http://127.0.0.1:8001/api/v1/video/ask-video`
+   - **Body (raw JSON):** `{"video_id": "test_001", "question": "What is in the video?"}`
+   - **Expected:** Full JSON response with the generated `answer` and `session_id`.
+
+5. **Streaming Chat:**
+   - **Method:** `POST`
+   - **URL:** `http://127.0.0.1:8001/api/v1/video/ask-video-stream`
+   - **Body (raw JSON):** Same as above.
+   - **Expected:** Streaming text response (ChatGPT style typing effect).
+
 ---
 
 ## 📁 Project Structure
