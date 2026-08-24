@@ -6,7 +6,9 @@
 # WHO CALLS: app/graphs/video_processing_graph.py (Phase 3), and Q&A routes (Phase 4)
 # CONNECTED TO: Google Generative AI API (Gemini LLM Service)
 
+import time
 import google.generativeai as genai
+from google.api_core.exceptions import ResourceExhausted
 from app.core.config import settings
 
 # Initialize and configure the Google Generative AI SDK once at module level
@@ -15,11 +17,19 @@ API_KEY = settings.GEMINI_API_KEY
 if API_KEY and API_KEY.strip():
     genai.configure(api_key=API_KEY)
 
+# Retry settings for rate-limit (429) errors — same pattern as embedder.py, so both
+# Gemini-calling modules behave consistently when quota limits are hit (e.g. during
+# a large backfill of many videos in a row).
+MAX_RETRIES = 5
+INITIAL_BACKOFF_SECONDS = 15
+
 
 def generate_video_summary(transcript: str, language: str = "en") -> str:
     """
     What this does:
         Sends the full transcript to Gemini LLM and asks it to generate a structured summary.
+        Automatically retries with increasing delays if the API responds with a rate-limit
+        (429) error.
 
     Why it exists:
         To help users quickly understand what the video lesson is about without watching
@@ -30,7 +40,8 @@ def generate_video_summary(transcript: str, language: str = "en") -> str:
 
     Raises:
         ValueError: if transcript is empty, or GEMINI_API_KEY is not configured
-        RuntimeError: if the Gemini API call fails
+        RuntimeError: if the Gemini API call fails for a non-rate-limit reason, or if
+                      rate-limit retries are exhausted
     """
 
     # Step 1: Input validation
@@ -56,20 +67,36 @@ Video Transcript:
 
 Summary:"""
 
-    # Step 3: Initialize the model and generate content
-    try:
-        model = genai.GenerativeModel("gemini-3.5-flash")
-        response = model.generate_content(prompt)
-        return response.text.strip()
-    except Exception as e:
-        raise RuntimeError(f"Failed to generate summary from Gemini LLM: {str(e)}")
+    # Step 3: Initialize the model and generate content, retrying on rate-limit errors
+    model = genai.GenerativeModel("gemini-3.5-flash")
+    last_error = None
+
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            response = model.generate_content(prompt)
+            return response.text.strip()
+        except ResourceExhausted as e:
+            last_error = e
+            if attempt == MAX_RETRIES:
+                break
+            wait_seconds = INITIAL_BACKOFF_SECONDS * attempt
+            print(f"    ⏳ Summary generation rate limit (429) hit. Waiting {wait_seconds}s before retry ({attempt}/{MAX_RETRIES})...")
+            time.sleep(wait_seconds)
+        except Exception as e:
+            raise RuntimeError(f"Failed to generate summary from Gemini LLM: {str(e)}")
+
+    raise RuntimeError(
+        f"Failed to generate summary after {MAX_RETRIES} rate-limit retries: {str(last_error)}. "
+        "Consider upgrading to a paid Gemini API tier if this happens often."
+    )
 
 
 def generate_qa_answer(question: str, context: str, history: str = "", language: str = "en") -> str:
     """
     What this does:
         Generates an answer to a user's question about a video, using the provided transcript context
-        and previous chat history.
+        and previous chat history. Automatically retries with increasing delays if the API
+        responds with a rate-limit (429) error.
 
     Why it exists:
         Allows users to have a dialogue with the video (e.g. asking "what was said at 02:30?" or
@@ -80,7 +107,8 @@ def generate_qa_answer(question: str, context: str, history: str = "", language:
 
     Raises:
         ValueError: if question or context is empty, or GEMINI_API_KEY is not configured
-        RuntimeError: if the Gemini API call fails
+        RuntimeError: if the Gemini API call fails for a non-rate-limit reason, or if
+                      rate-limit retries are exhausted
     """
 
     # Step 1: Input validation
@@ -123,13 +151,28 @@ Response Guidelines:
 
 Answer:"""
 
-    # Step 3: Initialize the model and generate content
-    try:
-        model = genai.GenerativeModel("gemini-3.5-flash")
-        response = model.generate_content(prompt)
-        return response.text.strip()
-    except Exception as e:
-        raise RuntimeError(f"Failed to generate Q&A answer from Gemini LLM: {str(e)}")
+    # Step 3: Initialize the model and generate content, retrying on rate-limit errors
+    model = genai.GenerativeModel("gemini-3.5-flash")
+    last_error = None
+
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            response = model.generate_content(prompt)
+            return response.text.strip()
+        except ResourceExhausted as e:
+            last_error = e
+            if attempt == MAX_RETRIES:
+                break
+            wait_seconds = INITIAL_BACKOFF_SECONDS * attempt
+            print(f"    ⏳ Q&A answer generation rate limit (429) hit. Waiting {wait_seconds}s before retry ({attempt}/{MAX_RETRIES})...")
+            time.sleep(wait_seconds)
+        except Exception as e:
+            raise RuntimeError(f"Failed to generate Q&A answer from Gemini LLM: {str(e)}")
+
+    raise RuntimeError(
+        f"Failed to generate Q&A answer after {MAX_RETRIES} rate-limit retries: {str(last_error)}. "
+        "Consider upgrading to a paid Gemini API tier if this happens often."
+    )
 
 
 def generate_qa_answer_stream(question: str, context: str, history: str = "", language: str = "en"):
@@ -138,12 +181,21 @@ def generate_qa_answer_stream(question: str, context: str, history: str = "", la
         Same as generate_qa_answer(), but instead of waiting for the full response and
         returning it as one string, this yields pieces of the answer as Gemini generates
         them — so the caller can forward each piece to the client as it arrives.
+        If the API responds with a rate-limit (429) error before any text has been
+        streamed yet, this retries with increasing delays, the same as the other
+        functions here.
 
     Why it exists:
         generate_qa_answer() makes the client wait ~5-10 seconds staring at nothing before
         any text appears. Streaming shows the first words within ~1 second and the rest
         appears progressively, like ChatGPT — the total time to finish is about the same,
         but it *feels* much faster because the user sees progress immediately.
+
+    Why retries only happen before streaming starts:
+        Once the first chunk has been yielded to the caller, we can't "restart" the
+        stream from scratch without the caller seeing a strange jump or duplicate text.
+        So retries here only apply to the initial call that opens the stream — a 429 or
+        other error after streaming has already begun still fails immediately.
 
     Output:
         A generator that yields str chunks of the answer, one piece at a time. The caller
@@ -152,7 +204,8 @@ def generate_qa_answer_stream(question: str, context: str, history: str = "", la
 
     Raises:
         ValueError: if question or context is empty, or GEMINI_API_KEY is not configured
-        RuntimeError: if the Gemini API call fails
+        RuntimeError: if the Gemini API call fails for a non-rate-limit reason, or if
+                      rate-limit retries are exhausted before streaming could start
     """
     # Step 1: Input validation (identical to generate_qa_answer)
     if not question or not question.strip():
@@ -194,10 +247,33 @@ Response Guidelines:
 
 Answer:"""
 
-    # Step 3: Call Gemini with stream=True and yield each piece as it arrives
+    # Step 3: Open the stream, retrying on rate-limit errors only before any chunk
+    # has been yielded yet (see docstring for why retries stop once streaming starts).
+    model = genai.GenerativeModel("gemini-3.5-flash")
+    last_error = None
+    response_stream = None
+
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            response_stream = model.generate_content(prompt, stream=True)
+            break
+        except ResourceExhausted as e:
+            last_error = e
+            if attempt == MAX_RETRIES:
+                break
+            wait_seconds = INITIAL_BACKOFF_SECONDS * attempt
+            print(f"    ⏳ Streaming answer rate limit (429) hit. Waiting {wait_seconds}s before retry ({attempt}/{MAX_RETRIES})...")
+            time.sleep(wait_seconds)
+        except Exception as e:
+            raise RuntimeError(f"Failed to generate streaming Q&A answer from Gemini LLM: {str(e)}")
+
+    if response_stream is None:
+        raise RuntimeError(
+            f"Failed to start streaming answer after {MAX_RETRIES} rate-limit retries: {str(last_error)}. "
+            "Consider upgrading to a paid Gemini API tier if this happens often."
+        )
+
     try:
-        model = genai.GenerativeModel("gemini-3.5-flash")
-        response_stream = model.generate_content(prompt, stream=True)
         for chunk in response_stream:
             if chunk.text:
                 yield chunk.text
