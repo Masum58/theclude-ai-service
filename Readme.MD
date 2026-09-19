@@ -238,11 +238,11 @@ ai_service/
 
 ## ⚠️ Known Limitations / Roadmap
 
-- No API authentication yet — any client can call these endpoints
-- No rate limiting
-- Global PDF knowledge base + platform-assistant chatbot (from the old Django `ai` app) not yet ported
-- Chunk boundaries have no overlap — a topic split across two chunks may lose some context (evaluation in progress to measure real-world impact)
-- No streaming yet in the video-processing progress reporting (only in Q&A answers)
+- **No API Authentication for this service:** The main Django app handles user logins securely. However, this FastAPI microservice currently has no locks. In a production environment, it should be placed behind a firewall so only the Django backend can access it.
+- **No Rate Limiting:** There is currently no restriction on how many times per second these specific AI endpoints can be called.
+- **Old Features Not Ported Yet:** The global PDF chatbot assistant from the old Django version has not been moved to this new FastAPI service yet.
+- **No Overlap in Text Chunks:** When cutting the video's transcript into small pieces for the AI to read, the pieces don't overlap. Sometimes, a sentence split exactly in the middle might lose a bit of context.
+- **No Live Progress Bar for Video Processing:** When a video is processing in the background, the system does not stream the live percentage (e.g., 10%... 50%). The frontend must ask the server "Is it done yet?" (Polling). *(Note: Q&A chat answers ARE live-streamed word-by-word just like ChatGPT).*
 
 ---
 
